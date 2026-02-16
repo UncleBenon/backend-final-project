@@ -1,0 +1,6 @@
+instructions/
+node_modules/
+package-lock.json
+.env
+/src/generated/prisma
+*.db
