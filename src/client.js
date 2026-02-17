@@ -2,7 +2,8 @@ import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
 import { PrismaClient } from './generated/prisma/client.js';
 
 const adapter = new PrismaBetterSqlite3({
-    url: "file:./prisma/dev.db"
+    url: "file:./prisma/dev.db",
+    log: ['query', 'info', 'warn', 'error']
 })
 
 // import this for the prisma client, has to be done this way in v7+ aparently
