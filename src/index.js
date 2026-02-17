@@ -1,15 +1,16 @@
 import express from "express";
 import logger from "./middlewear/logger.js";
 import errorHandler from "./middlewear/errorHandler.js";
+import usersRouter from "./routes/Users.js";
 
 const app = express();
 app.use(logger);
 
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
     res.send("Hello World!");
 });
 
-// TODO: Routes go here:
+app.use("/users", usersRouter);
 
 app.use(errorHandler);
 app.use((_, res) => {
