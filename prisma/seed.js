@@ -18,7 +18,7 @@ async function main() {
         });
     }
 
-    console.log(`Found ${hostData.hosts.length} host, Seedings.`);
+    console.log(`Found ${hostData.hosts.length} host, Seeding.`);
     for (const host of hostData.hosts) {
         await prisma.host.upsert({
             where: { id: host.id },
@@ -27,7 +27,7 @@ async function main() {
         });
     }
 
-    console.log(`Found ${reviewData.reviews.length} review, Seedings.`);
+    console.log(`Found ${reviewData.reviews.length} review, Seeding.`);
     for (const review of reviewData.reviews) {
         await prisma.review.upsert({
             where: { id: review.id },
@@ -36,7 +36,7 @@ async function main() {
         });
     }
 
-    console.log(`Found ${bookingData.bookings.length} booking, Seedings.`);
+    console.log(`Found ${bookingData.bookings.length} booking, Seeding.`);
     for (const booking of bookingData.bookings) {
         await prisma.booking.upsert({
             where: { id: booking.id },
@@ -45,7 +45,7 @@ async function main() {
         });
     }
 
-    console.log(`Found ${propertyData.properties.length} properties, Seedings.`);
+    console.log(`Found ${propertyData.properties.length} properties, Seeding.`);
     for (const property of propertyData.properties) {
         await prisma.property.upsert({
             where: { id: property.id },
