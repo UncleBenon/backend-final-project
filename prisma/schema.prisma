@@ -67,7 +67,7 @@ model Property {
     location      String
     pricePerNight Decimal
     bedroomCount  Int
-    bathroomCount Int
+    bathRoomCount Int
     maxGuestCount Int
     rating        Int
     host          Host    @relation(fields: [hostId], references: [id])
