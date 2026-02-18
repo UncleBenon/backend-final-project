@@ -23,7 +23,7 @@ app.use("/hosts", hostsRouter);
 app.use("/properties", propertiesRouter);
 app.use("/reviews", reviewRouter);
 
-app.use((_, res) => {
+app.use((_req, res) => {
     res.status(404).send('Page Not Found');
 });
 

@@ -57,7 +57,6 @@ router.delete("/:id", authMiddleware, async (req, res) => {
         });
         res.status(200).json(host);
     } catch (error) {
-        console.log(error);
         throw new NotFoundError("Host", id);
     }
 });
