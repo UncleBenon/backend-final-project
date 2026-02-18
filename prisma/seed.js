@@ -27,6 +27,15 @@ async function main() {
         });
     }
 
+    console.log(`Found ${propertyData.properties.length} properties, Seeding.`);
+    for (const property of propertyData.properties) {
+        await prisma.property.upsert({
+            where: { id: property.id },
+            update: {},
+            create: property
+        });
+    }
+
     console.log(`Found ${reviewData.reviews.length} review, Seeding.`);
     for (const review of reviewData.reviews) {
         await prisma.review.upsert({
@@ -42,15 +51,6 @@ async function main() {
             where: { id: booking.id },
             update: {},
             create: booking
-        });
-    }
-
-    console.log(`Found ${propertyData.properties.length} properties, Seeding.`);
-    for (const property of propertyData.properties) {
-        await prisma.property.upsert({
-            where: { id: property.id },
-            update: {},
-            create: property
         });
     }
 }
