@@ -6,7 +6,7 @@ import authMiddleware from '../middlewear/auth.js';
 
 const router = Router();
 
-router.get("/", authMiddleware, async (req, res) => {
+router.get("/", async (req, res) => {
     const { userId } = req.query;
     const users = await prisma.booking.findMany({
         where: {
@@ -37,7 +37,7 @@ router.post("/", authMiddleware, async (req, res) => {
     }
 });
 
-router.get("/:id", authMiddleware, async (req, res) => {
+router.get("/:id", async (req, res) => {
     const { id } = req.params;
     const booking = await prisma.booking.findFirst({
         where: {

@@ -61,7 +61,7 @@ model Booking {
 
 model Property {
     id            String  @id @default(uuid())
-    hostId        String
+    hostId        String?
     title         String
     description   String
     location      String
@@ -70,7 +70,7 @@ model Property {
     bathRoomCount Int
     maxGuestCount Int
     rating        Int
-    host          Host    @relation(fields: [hostId], references: [id], onDelete: Cascade)
+    host          Host?    @relation(fields: [hostId], references: [id], onDelete: SetNull)
 
     @@index([location])
     @@index([pricePerNight])
