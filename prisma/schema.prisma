@@ -70,7 +70,7 @@ model Property {
     bathRoomCount Int
     maxGuestCount Int
     rating        Int
-    host          Host    @relation(fields: [hostId], references: [id])
+    host          Host    @relation(fields: [hostId], references: [id], onDelete: Cascade)
 
     @@index([location])
     @@index([pricePerNight])

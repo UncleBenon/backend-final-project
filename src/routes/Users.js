@@ -1,11 +1,12 @@
 import { Router } from 'express';
 import { prisma } from "../client.js";
 import NotFoundError from '../errors/NotFoundError.js';
+import FailedToCreateError from '../errors/FailedToCreateError.js';
 import authMiddleware from '../middlewear/auth.js';
 
 const router = Router();
 
-router.get("/", async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
     const { username, email } = req.query;
     const users = await prisma.user.findMany({
         where: {
@@ -18,7 +19,7 @@ router.get("/", async (req, res) => {
     res.status(200).json(users);
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", authMiddleware, async (req, res) => {
     const { id } = req.params;
     const user = await prisma.user.findFirst({
         where: { id: id },
@@ -28,19 +29,23 @@ router.get("/:id", async (req, res) => {
     res.status(200).json(user);
 });
 
-router.post("/", async (req, res) => {
-    const { username, password, name, email, phoneNumber, pictureUrl } = req.body;
-    const newUser = await prisma.user.create({
-        data: {
-            username: username,
-            password: password,
-            name: name,
-            email: email,
-            phoneNumber: phoneNumber,
-            pictureUrl: pictureUrl
-        }
-    })
-    res.status(201).json(newUser);
+router.post("/", authMiddleware, async (req, res) => {
+    try {
+        const { username, password, name, email, phoneNumber, pictureUrl } = req.body;
+        const newUser = await prisma.user.create({
+            data: {
+                username: username,
+                password: password,
+                name: name,
+                email: email,
+                phoneNumber: phoneNumber,
+                pictureUrl: pictureUrl
+            }
+        })
+        res.status(201).json(newUser);
+    } catch (error) {
+        throw new FailedToCreateError("User");
+    }
 });
 
 router.delete("/:id", authMiddleware, async (req, res) => {
@@ -55,12 +60,10 @@ router.delete("/:id", authMiddleware, async (req, res) => {
     }
 });
 
-// TODO: Add update user
-//       Don't forget authMiddleware!!!!
 router.put("/:id", authMiddleware, async (req, res) => {
     const { id } = req.params;
-    const { username, password, fullName, email, phoneNumber, pictureUrl } = req.body;
     try {
+        const { username, password, fullName, email, phoneNumber, pictureUrl } = req.body;
         const user = await prisma.user.update({
             where: { id: id },
             data: {
