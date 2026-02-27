@@ -15,6 +15,7 @@
     "author": "Uncle Benon",
     "license": "ISC",
     "devDependencies": {
+        "@types/node": "^25.3.2",
         "newman": "^6.2.2",
         "nodemon": "^3.1.11"
     },
