@@ -25,7 +25,11 @@ app.use("/hosts", hostsRouter);
 app.use("/properties", propertiesRouter);
 app.use("/reviews", reviewRouter);
 
-app.get("/debug-sentry", (_req, _res) => {
+app.get("/debug-sentry", function mainHandler(req, res) {
+    // Send a log before throwing the error
+    Sentry.logger.info('User triggered test error', {
+        action: 'test_error_endpoint',
+    });
     throw new Error("My first Sentry error!");
 });
 
