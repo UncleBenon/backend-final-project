@@ -7,6 +7,8 @@ import bookingRouter from "./routes/Bookings.js";
 import hostsRouter from "./routes/Hosts.js";
 import propertiesRouter from "./routes/Properties.js";
 import reviewRouter from "./routes/Reviews.js";
+import * as Sentry from "@sentry/node";
+import "./utils/instrument.js";
 
 const app = express();
 app.use(express.json());
@@ -23,10 +25,15 @@ app.use("/hosts", hostsRouter);
 app.use("/properties", propertiesRouter);
 app.use("/reviews", reviewRouter);
 
+app.get("/debug-sentry", (_req, _res) => {
+    throw new Error("My first Sentry error!");
+});
+
 app.use((_req, res) => {
     res.status(404).send('Page Not Found');
 });
 
+Sentry.setupExpressErrorHandler(app);
 app.use(errorHandler);
 
 app.listen(3000, () => {
